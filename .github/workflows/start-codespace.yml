@@ -30,7 +30,7 @@ jobs:
         run: |
           declare -A token_map=(
             ["TOKEN_1"]="redesigned-invention-v6q7xx5v4rwv2www5 miniature-dollop-wrgjww476j7xh5wwr"
-            ["TOKEN_2"]="codespace-3 codespace-4"
+            ["TOKEN_2"]="codespace-legendary-acorn-q7p5949rg55xc4grv codespace-miniature-eureka-wrgq9596jjjgh9xwx"
             ["TOKEN_3"]="codespace-5 codespace-6"
             ["TOKEN_4"]="codespace-7 codespace-8"
             ["TOKEN_5"]="codespace-9 codespace-10"
