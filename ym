@@ -1,0 +1,13 @@
+stages:
+  - monitor
+
+keep_codespaces_alive:
+  stage: monitor
+  image: python:3.9
+  script:
+    - apt-get update && apt-get install -y curl gnupg
+    - curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+    - chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+    - echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+    - apt-get update && apt-get install -y gh
+    - python3 monitor.py
