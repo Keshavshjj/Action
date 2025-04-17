@@ -42,20 +42,19 @@ jobs:
           )
 
           for token_key in "${!token_map[@]}"; do
-            token_value=${!token_key}
-            echo "$token_value" | gh auth login --with-token
+  export GH_TOKEN="${!token_key}"
 
-            for codespace in ${token_map[$token_key]}; do
-              echo "Checking $codespace..."
-              STATUS=$(gh codespace list --json name,state | jq -r --arg name "$codespace" '.[] | select(.name == $name) | .state')
+  for codespace in ${token_map[$token_key]}; do
+    echo "Checking $codespace..."
+    STATUS=$(gh codespace list --json name,state | jq -r --arg name "$codespace" '.[] | select(.name == $name) | .state')
 
-              echo "Status of $codespace: $STATUS"
+    echo "Status of $codespace: $STATUS"
 
-              if [ "$STATUS" = "Shutdown" ]; then
-                echo "Starting $codespace..."
-                gh codespace ssh -c "$codespace" -- true
-              else
-                echo "$codespace is already running."
-              fi
-            done
-          done
+    if [ "$STATUS" = "Shutdown" ]; then
+      echo "Starting $codespace..."
+      gh codespace ssh -c "$codespace" -- true
+    else
+      echo "$codespace is already running."
+    fi
+  done
+done
